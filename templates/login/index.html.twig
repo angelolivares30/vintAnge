@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login Vintange{% endblock %}
+
+{% block stylesheets %}
+        <link rel="stylesheet" href="styles/login.css">
+{% endblock %}
+{% block body %}
+
+    <div class="login-container">
+        <h2 class="login-title">INICIAR SESIÓN</h2>
+        <form action="{{ path('login') }}" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Email</label>
+                <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" placeholder="Ingrese su correo electrónico"/>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="_password" placeholder="Ingrese su contraseña">
+            </div>
+            <p class="text-center"><a href="{{path('userRegistration')}}"> ¿Aún no tienes una cuenta? Regístrate aquí. </a></p>
+
+            <div class="d-flex justify-content-center">
+                <input type="hidden" name="_target_path" value=""/>
+                <button type="submit" class="btn btn-custom btn-block">Iniciar Sesión</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

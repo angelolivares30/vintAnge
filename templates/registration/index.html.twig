@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registro Vintange{% endblock %}
+
+{% block stylesheets %}
+        <link rel="stylesheet" href="styles/registro.css">
+{% endblock %}
+
+{% block body %}
+    <div class="registro_container">
+        <h2 class="registro_title">REGISTRARSE</h2>
+        {{ form_start(registration_form) }}
+            <div class="mb-3">
+                {{ form_label(registration_form.email) }}
+                {{ form_widget(registration_form.email) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(registration_form.password) }}
+                {{ form_widget(registration_form.password) }}
+            </div>
+            <p class="text-center">
+                <a href="{{ path('login') }}">¿Ya tienes cuenta? Inicia sesión aquí.</a>
+            </p>
+            <div class="d-flex justify-content-center">
+                {{ form_widget(registration_form.registrarse) }}
+            </div>
+        {{ form_end(registration_form) }}
+    </div>
+{% endblock %}
