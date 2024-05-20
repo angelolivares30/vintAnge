@@ -1,0 +1,67 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e2f;
+    color: #fff;
+}
+header {
+    background-color: #5b4295;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.navbar-brand img {
+    height: 40px;
+}
+.navbar-nav .nav-link {
+    color: #e0e0f8 !important;
+    font-weight: bold;
+}
+.navbar-nav .nav-link:hover {
+    color: #c0c0e0 !important;
+}
+.logout {
+    color: #e0e0f8;
+    font-size: 20px;
+    cursor: pointer;
+}
+.logout:hover {
+    color: #ff4081;
+}
+.content {
+    margin-top: 70px; /* Ajusta este valor si el header es más alto */
+    min-height: calc(100vh - 100px); /* Ajusta 100px según la altura del footer */
+}
+
+footer {
+    background-color: #5b4295;
+    padding: 10px 10px 0 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.footer-links {
+    margin-bottom: 20px;
+}
+.footer-links a {
+    color: #e0e0f8;
+    text-decoration: none;
+    margin: 0 10px;
+}
+.footer-links a:hover {
+    color: #c0c0e0;
+}
+.social-icons i {
+    font-size: 24px;
+    margin: 0 10px;
+    color: #e0e0f8;
+    transition: color 0.3s;
+}
+.social-icons i:hover {
+    color: #c0c0e0;
+}
