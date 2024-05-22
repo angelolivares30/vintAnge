@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %}Editar Producto{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="my-4">Editar Producto</h1>
+            <form method="post">
+                {{ form_start(formProducto, {'attr': {'class': 'form-group'}}) }}
+                <div class="mb-3">
+                    {{ form_label(formProducto.nombre, 'Nombre', {'attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(formProducto.nombre, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formProducto.nombre) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(formProducto.descripcion, 'Descripcion', {'attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(formProducto.descripcion, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formProducto.descripcion) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(formProducto.precio, 'Precio', {'attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(formProducto.precio, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formProducto.precio) }}
+                </div>
+                {{ form_end(formProducto) }}
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    background: url('/images/background-index3.jpg') no-repeat center center fixed;
+}
+h1{
+    color: white;
+}
