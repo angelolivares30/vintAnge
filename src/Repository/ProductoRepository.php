@@ -30,6 +30,14 @@ class ProductoRepository extends ServiceEntityRepository
     //            ->getResult()
     //        ;
     //    }
+    public function findAll(): array
+       {
+            return $this->createQueryBuilder('p')
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+        
 
     //    public function findOneBySomeField($value): ?Producto
     //    {

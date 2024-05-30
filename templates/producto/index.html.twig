@@ -1,45 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vintange{% endblock %}
+{% block title %}Vintange
+{% endblock %}
 {% block stylesheets %}
-        <link rel="stylesheet" href="styles/index.css">
+	<link rel="stylesheet" href="styles/index.css">
 {% endblock %}
 
 {% block body %}
-<div class="container mt-5">
-    <h1 class="my-4 text-center">TODOS NUESTROS PRODUCTOS</h1>
-    
-    {% if productos is empty %}
-        <div class="alert alert-info" role="alert">
-            No hay incidencias registradas 
-        </div>
-    {% else %}
-        <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">
-            {% for producto in productos|reverse %}
-                <div class="col">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ producto.nombre }}</h5>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><strong>Descripcion:</strong> {{ producto.descripcion }}</li>
-                                <li class="list-group-item"><strong>Precio:</strong> {{ producto.precio }}</li>
-                            </ul>
-                            <div class="text-end mt-3">
-                                <a href="{{ path('deleteProducto', {id: producto.id}) }}" class="btn btn-danger me-2">Borrar</a>
-                                <a href="{{ path('editProducto', {id: producto.id}) }}" class="btn btn-primary">Editar</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-    <a href="{{ path('addProducto') }}" class="btn btn-success mt-3">Insertar Producto</a>
+	<div class="container mt-5">
+		<div class="titulo">
+			<h1 class="my-4 text-center">TODOS NUESTROS PRODUCTOS</h1>
 
+		</div>
 
-
-    {# <div class="text-center mt-4">
-        <a href="{{ path('listaClientes') }}" class="btn btn-secondary">Volver Atrás</a>
-    </div> #}
-</div>
+		{% if productos is empty %}
+			<div class="alert alert-info" role="alert">
+				No hay productos registrados
+			</div>
+		{% else %}
+			<div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">
+				{% for producto in productos|reverse %}
+					<div class="col">
+						<div class="card shadow">
+							<div class="card-body">
+								<h5 class="card-title">{{ producto.nombre }}</h5>
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item">
+       									<img src="uploads/fotosProductos/{{producto.foto}}" width="200px">								
+									</li>
+									<li class="list-group-item">
+										<strong>Descripcion:</strong>
+										{{ producto.descripcion }}</li>
+									<li class="list-group-item">
+										<strong>Precio:</strong>
+										{{ producto.precio }}</li>
+								</ul>
+								<div class="text-end mt-3">
+									<a href="{{ path('deleteProducto', {id: producto.id}) }}" class="btn btn-danger me-2">Borrar</a>
+									<a href="{{ path('editProducto', {id: producto.id}) }}" class="btn btn-primary">Editar</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+		<a href="{{ path('addProducto') }}" class="btn btn-success mt-3">Insertar Producto</a>
+	</div>
 {% endblock %}

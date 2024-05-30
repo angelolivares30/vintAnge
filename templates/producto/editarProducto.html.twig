@@ -22,6 +22,16 @@
                     {{ form_widget(formProducto.precio, {'attr': {'class': 'form-control'}}) }}
                     {{ form_errors(formProducto.precio) }}
                 </div>
+                <div class="mb-3">
+                    {{ form_label(formProducto.categoria, 'Categoria', {'attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(formProducto.categoria, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formProducto.categoria) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(formProducto.foto, 'Foto', {'attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(formProducto.foto, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formProducto.foto) }}
+                </div>
                 {{ form_end(formProducto) }}
             </form>
         </div>

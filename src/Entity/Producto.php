@@ -22,6 +22,15 @@ class Producto
     #[ORM\Column]
     private ?float $precio = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $foto = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categoria $categoria = null;
+
+
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -62,4 +71,29 @@ class Producto
 
         return $this;
     }
+
+    public function getFoto(): ?string
+    {
+        return $this->foto;
+    }
+
+    public function setFoto(string $foto): static
+    {
+        $this->foto = $foto;
+
+        return $this;
+    }
+
+    public function getCategoria(): ?Categoria
+    {
+        return $this->categoria;
+    }
+
+    public function setCategoria(?Categoria $categoria): static
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
 }

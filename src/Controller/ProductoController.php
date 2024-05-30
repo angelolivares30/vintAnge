@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Producto;
 use App\Form\ProductoType;
+use App\Repository\CategoriaRepository;
 use App\Repository\ProductoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProductoController extends AbstractController
 {
@@ -28,20 +31,43 @@ class ProductoController extends AbstractController
         ]);
     }
 //-----------------------INSERTAR PRODUCTO---------------------------//
+
     #[Route('/insertarProducto', name: 'addProducto')]
-    public function addProducto(Request $request): Response
+    public function addProducto(Request $request, SluggerInterface $slugger, CategoriaRepository $categoriaRepository): Response
     {
     $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
-
     $producto = new Producto();
-    $form = $this->createForm(ProductoType::class, $producto);
+    $categorias = $categoriaRepository->findAll();
+    $categoriaChoices = [];
+        foreach ($categorias as $categoria) {
+            $categoriaChoices[$categoria->getNombre()] = $categoria;
+        }
+    $form = $this->createForm(ProductoType::class, $producto, [
+        'categorias' => $categoriaChoices
+    ]);
     $form->handleRequest($request);
     
     if ($form->isSubmitted() && $form->isValid()) {
-        $this->addFlash('ss', '¡Se ha añadido correctamente!');
+        $file = $form->get('foto')->getData();
+        if ($file) {
+            $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename .'-'. uniqid().'.'. $file->guessExtension();
+            try {
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                throw new \Exception('error, ha habido un error con tu imagen');
+            }
+            $producto->setFoto($newFilename);
+        }
+
 
         $this->em->persist($producto);
         $this->em->flush();
+        $this->addFlash('ss', '¡Se ha añadido correctamente!');
         
         return $this->redirectToRoute('listarProductos'); // Redirigir a la lista de productos después de enviar el formulario
     }
@@ -66,25 +92,49 @@ class ProductoController extends AbstractController
 
 //---------------------EDITAR PRODUCTO-----------------------//
 
-#[Route('/producto/edit/{id}', name: 'editProducto')]
-public function editProducto(Request $request, $id): Response
+#[Route('/editarProducto/{id}', name: 'editProducto')]
+public function editProducto(int $id, Request $request, SluggerInterface $slugger, CategoriaRepository $categoriaRepository, ProductoRepository $productoRepository): Response
 {
     $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
 
-    $producto = $this->em->getRepository(Producto::class)->find($id);
-
+    $producto = $productoRepository->find($id);
     if (!$producto) {
         throw $this->createNotFoundException('El producto no existe');
     }
 
-    $form = $this->createForm(ProductoType::class, $producto);
+    $categorias = $categoriaRepository->findAll();
+    $categoriaChoices = [];
+    foreach ($categorias as $categoria) {
+        $categoriaChoices[$categoria->getNombre()] = $categoria;
+    }
+
+    $form = $this->createForm(ProductoType::class, $producto, [
+        'categorias' => $categoriaChoices
+    ]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
+        $file = $form->get('foto')->getData();
+        if ($file) {
+            $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename .'-'. uniqid().'.'. $file->guessExtension();
+            try {
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                throw new \Exception('error, ha habido un error con tu imagen');
+            }
+            $producto->setFoto($newFilename);
+        }
 
+        $this->em->persist($producto);
         $this->em->flush();
-        $this->addFlash('ss', '¡Se ha actualizado correctamente!');
-        return $this->redirectToRoute('listarProductos'); // Redirigir a la lista de productos después de actualizar el formulario
+        $this->addFlash('ss', '¡El producto ha sido actualizado correctamente!');
+        
+        return $this->redirectToRoute('listarProductos'); // Redirigir a la lista de productos después de enviar el formulario
     }
 
     return $this->render('producto/editarProducto.html.twig', [

@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseLogReg.html.twig' %}
 
 {% block title %}Login Vintange{% endblock %}
 
 {% block stylesheets %}
-        <link rel="stylesheet" href="styles/login.css">
+		<link rel="stylesheet" href="styles/login.css">
 {% endblock %}
 {% block body %}
 
@@ -19,7 +19,7 @@
                 <input type="password" class="form-control" id="password" name="_password" placeholder="Ingrese su contraseña">
             </div>
             <p class="text-center"><a href="{{path('userRegistration')}}"> ¿Aún no tienes una cuenta? Regístrate aquí. </a></p>
-
+            <p class="text-center"><a href="{{ path('listarProductos') }}">Volver a la página principal</a></p>
             <div class="d-flex justify-content-center">
                 <input type="hidden" name="_target_path" value=""/>
                 <button type="submit" class="btn btn-custom btn-block">Iniciar Sesión</button>

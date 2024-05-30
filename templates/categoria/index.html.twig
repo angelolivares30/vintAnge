@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Añadir Categoría{% endblock %}
+{% block stylesheets %}
+		<link rel="stylesheet" href="styles/form.css">
+{% endblock %}
+{% block body %}
+    <div class="container container-insert">
+        <h1>AÑADIR CATEGORÍA</h1>
+        {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.nombre, 'Nombre de la Categoría', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.nombre, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.nombre) }}
+            </div>
+            <button type="submit" class="btn btn btn-custom btn-block">Añadir</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseLogReg.html.twig' %}
 
 {% block title %}Registro Vintange{% endblock %}
 
 {% block stylesheets %}
-        <link rel="stylesheet" href="styles/registro.css">
+		<link rel="stylesheet" href="styles/registro.css">
 {% endblock %}
 
 {% block body %}
@@ -20,6 +20,9 @@
             </div>
             <p class="text-center">
                 <a href="{{ path('login') }}">¿Ya tienes cuenta? Inicia sesión aquí.</a>
+            </p>
+            <p class="text-center">
+                <a href="{{ path('listarProductos') }}">Volver a la página principal</a>
             </p>
             <div class="d-flex justify-content-center">
                 {{ form_widget(registration_form.registrarse) }}

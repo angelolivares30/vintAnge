@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h1 class="my-4">Agregar Producto</h1>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {{ form_start(formProducto, {'attr': {'class': 'form-group'}}) }}
                 <div class="mb-3">
                     {{ form_label(formProducto.nombre, 'Nombre', {'attr': {'class': 'form-label'}}) }}
@@ -21,6 +21,16 @@
                     {{ form_label(formProducto.precio, 'Precio', {'attr': {'class': 'form-label'}}) }}
                     {{ form_widget(formProducto.precio, {'attr': {'class': 'form-control'}}) }}
                     {{ form_errors(formProducto.precio) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(formProducto.categoria, 'Categoria', {'attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(formProducto.categoria, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formProducto.categoria) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(formProducto.foto, 'Foto', {'attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(formProducto.foto, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formProducto.foto) }}
                 </div>
                 {{ form_end(formProducto) }}
             </form>
