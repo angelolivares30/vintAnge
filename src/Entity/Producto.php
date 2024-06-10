@@ -25,7 +25,7 @@ class Producto
     #[ORM\Column(length: 255)]
     private ?string $foto = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy:'productos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categoria $categoria = null;
 

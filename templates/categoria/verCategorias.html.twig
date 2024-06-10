@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ver Categorías{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="styles/categorias.css">
+{% endblock %}
+{% block body %}
+<div class="container-categorias">
+    <h1>Ver Categorías</h1>
+    <table id="categorias" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categoria in categorias %}
+                <tr>
+                    <td>{{ categoria.id }}</td>
+                    <td>{{ categoria.nombre }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

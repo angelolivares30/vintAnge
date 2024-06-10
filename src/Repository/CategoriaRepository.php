@@ -27,6 +27,8 @@ class CategoriaRepository extends ServiceEntityRepository
             ;
         }
 
+        
+
     //    public function findOneBySomeField($value): ?Categoria
     //    {
     //        return $this->createQueryBuilder('c')

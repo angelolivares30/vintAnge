@@ -26,7 +26,7 @@ class CategoriaController extends AbstractController
     }
 
     #[Route('/verCategorias', name: 'ver_categorias')]
-    public function verIncidencias(CategoriaRepository $categoriaRepository): Response
+    public function verCategorias(CategoriaRepository $categoriaRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
         // Obtener todas las incidencias del repositorio
@@ -38,10 +38,10 @@ class CategoriaController extends AbstractController
 
 
     #[Route('/insertarCategoria', name: 'add_categoria')]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em, CategoriaRepository $categoriaRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
-
+        $categorias = $categoriaRepository->findAll();
         $categoria = new Categoria();
         $form = $this->createForm(CategoriaType::class, $categoria);
         $form->handleRequest($request);
@@ -56,7 +56,8 @@ class CategoriaController extends AbstractController
         }
 
         return $this->render('categoria/index.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'categorias' => $categorias
         ]);
     }
 

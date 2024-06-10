@@ -3,7 +3,16 @@ body{
 }
 .container-insert {
     max-width: 600px;
-    margin: 12% auto ;
+    margin: 15.5% auto ;
+    padding: 25px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.container-insert-producto {
+    width: 600px;
+    height: auto;
+    margin: 7% auto auto auto ;
     padding: 25px;
     background-color: #f5f5f5;
     border-radius: 10px;

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="container bg-white p-4 rounded shadow text-center" style="max-width: 400px; margin-bottom: 140px;">
+        <div class="d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
+            <h1 class="mb-4">Gestión de Categorías</h1>
+            <div class="d-flex flex-column align-items-center">
+                <a class="btn btn-primary mb-3" style="width: 100%;" href="{{ path('add_categoria') }}">Insertar Categoría</a>
+                <a class="btn btn-secondary mb-3" style="width: 100%;" href="{{ path('ver_categorias') }}">Ver Categorías</a>
+                <a class="btn btn-success mb-3" style="width: 100%;" href="{{ path('adminRegistration') }}">Registrar Administradores</a>
+                <a class="btn " style="width: 100%;" href="{{ path('listarProductos') }}">Volver al inicio</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

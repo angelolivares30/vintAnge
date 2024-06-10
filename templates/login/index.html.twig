@@ -10,6 +10,9 @@
     <div class="login-container">
         <h2 class="login-title">INICIAR SESIÓN</h2>
         <form action="{{ path('login') }}" method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
             <div class="mb-3">
                 <label for="username" class="form-label">Email</label>
                 <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" placeholder="Ingrese su correo electrónico"/>

@@ -18,6 +18,18 @@
                 {{ form_label(registration_form.password) }}
                 {{ form_widget(registration_form.password) }}
             </div>
+            <div class="mb-3">
+                {{ form_label(registration_form.nombre) }}
+                {{ form_widget(registration_form.nombre) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(registration_form.apellidos) }}
+                {{ form_widget(registration_form.apellidos) }}
+            </div>
+            <div class="mb-3">
+                {{ form_label(registration_form.telefono) }}
+                {{ form_widget(registration_form.telefono) }}
+            </div>
             <p class="text-center">
                 <a href="{{ path('login') }}">¿Ya tienes cuenta? Inicia sesión aquí.</a>
             </p>

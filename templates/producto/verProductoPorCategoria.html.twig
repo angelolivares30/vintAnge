@@ -10,10 +10,10 @@
 	<div class="container mt-5">
 		<div class="titulo">
 			<h1 class="my-4 text-center">TODOS NUESTROS PRODUCTOS</h1>
-		</div>
 
+		</div>
 		<div class="container container-carousel my-5">
-			<div id="productCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+			<div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-indicators">
 					<button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 					<button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -52,7 +52,6 @@
 				</div>
 			</div>
 		</div>
-
 		{% if productos is empty %}
 			<div class="alert alert-info" role="alert">
 				No hay productos registrados
@@ -61,41 +60,31 @@
 			<div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">
 				{% for producto in productos|reverse %}
 					<div class="col">
-						<a href="{{ path('detalleProducto', {id: producto.id}) }}" class="text-decoration-none text-dark">
-							<div class="card shadow">
-								<div class="card-body">
-									<h5 class="card-title">{{ producto.nombre }}</h5>
-									<ul class="list-group list-group-flush">
-										<li class="list-group-item">
-											<div class="image-container">
-												<img src="uploads/fotosProductos/{{producto.foto}}" alt="{{ producto.nombre }}">
-											</div>
-										</li>
-										<li class="list-group-item">
-											<strong>Descripcion:</strong>
-											{{ producto.descripcion }}
-										</li>
-										<li class="list-group-item">
-											<strong>Precio:</strong>
-											{{ producto.precio }}
-										</li>
-									</ul>
-									{% if is_granted('ROLE_ADMIN') %}
-									<div class="text-end mt-3">
-										<a href="{{ path('deleteProducto', {id: producto.id}) }}" class="btn btn-danger me-2">Borrar</a>
-										<a href="{{ path('editProducto', {id: producto.id}) }}" class="btn btn-primary">Editar</a>
-									</div>
-									{% endif %}
+						<div class="card shadow">
+							<div class="card-body">
+								<h5 class="card-title">{{ producto.nombre }}</h5>
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item">
+       									<img src={{ asset('uploads/fotosProductos/' ~ producto.foto) }} width="200px">								
+									</li>
+									<li class="list-group-item">
+										<strong>Descripcion:</strong>
+										{{ producto.descripcion }}</li>
+									<li class="list-group-item">
+										<strong>Precio:</strong>
+										{{ producto.precio }}</li>
+								</ul>
+								{% if is_granted('ROLE_ADMIN') %}
+								<div class="text-end mt-3">
+									<a href="{{ path('deleteProducto', {id: producto.id}) }}" class="btn btn-danger me-2">Borrar</a>
+									<a href="{{ path('editProducto', {id: producto.id}) }}" class="btn btn-primary">Editar</a>
 								</div>
+								{% endif %}
 							</div>
-						</a>
+						</div>
 					</div>
 				{% endfor %}
 			</div>
-		{% endif %}
-		{% if is_granted('ROLE_ADMIN') %}
-		<a href="{{ path('addProducto') }}" class="btn btn-success mt-3">Insertar Producto</a>
-		<a href="{{ path('vistaAdmin') }}" class="btn btn-success mt-3">Acciones administrador</a>
 		{% endif %}
 	</div>
 {% endblock %}

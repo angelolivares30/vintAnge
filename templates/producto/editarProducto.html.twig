@@ -1,40 +1,46 @@
-{% extends 'base.html.twig' %}
-{% block title %}Editar Producto{% endblock %}
+{% extends 'baseLogReg.html.twig' %}
+{% block title %}Editar Producto
+{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="styles/form.css">
+{% endblock %}
 {% block body %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h1 class="my-4">Editar Producto</h1>
-            <form method="post">
-                {{ form_start(formProducto, {'attr': {'class': 'form-group'}}) }}
-                <div class="mb-3">
-                    {{ form_label(formProducto.nombre, 'Nombre', {'attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(formProducto.nombre, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(formProducto.nombre) }}
-                </div>
-                <div class="mb-3">
-                    {{ form_label(formProducto.descripcion, 'Descripcion', {'attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(formProducto.descripcion, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(formProducto.descripcion) }}
-                </div>
-                <div class="mb-3">
-                    {{ form_label(formProducto.precio, 'Precio', {'attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(formProducto.precio, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(formProducto.precio) }}
-                </div>
-                <div class="mb-3">
-                    {{ form_label(formProducto.categoria, 'Categoria', {'attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(formProducto.categoria, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(formProducto.categoria) }}
-                </div>
-                <div class="mb-3">
-                    {{ form_label(formProducto.foto, 'Foto', {'attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(formProducto.foto, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(formProducto.foto) }}
-                </div>
-                {{ form_end(formProducto) }}
-            </form>
-        </div>
-    </div>
+	<div class="container container-insert-producto">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<h1 class="my-4">Editar Producto</h1>
+				{{ form_start(formProducto, {'attr': {'class': 'form-group'}, 'enctype':'multipart/form-data' }) }}
+				<div class="mb-3">
+					{{ form_label(formProducto.nombre, 'Nombre', {'attr': {'class': 'form-label'}}) }}
+					{{ form_widget(formProducto.nombre, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(formProducto.nombre) }}
+				</div>
+				<div class="mb-3">
+					{{ form_label(formProducto.descripcion, 'Descripcion', {'attr': {'class': 'form-label'}}) }}
+					{{ form_widget(formProducto.descripcion, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(formProducto.descripcion) }}
+				</div>
+				<div class="mb-3">
+					{{ form_label(formProducto.precio, 'Precio', {'attr': {'class': 'form-label'}}) }}
+					{{ form_widget(formProducto.precio, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(formProducto.precio) }}
+				</div>
+				<div class="mb-3">
+					{{ form_label(formProducto.categoria, 'Categoria', {'attr': {'class': 'form-label'}}) }}
+					{{ form_widget(formProducto.categoria, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(formProducto.categoria) }}
+				</div>
+				<div class="mb-3">
+					{{ form_label(formProducto.foto, 'Foto', {'attr': {'class': 'form-label'}}) }}
+					{{ form_widget(formProducto.foto, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(formProducto.foto) }}
+				</div>
+				{{ form_end(formProducto) }}
+			</div>
+		</div>
+        <p class="text-center">
+                <a href="{{ path('listarProductos') }}">Volver a la página principal</a>
+        </p>
+	</div>
 
 {% endblock %}

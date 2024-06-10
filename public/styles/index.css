@@ -15,3 +15,13 @@ body {
     background-color: black;
     text-shadow: 2px 2px #4B0082;
 }
+.image-container {
+    width: 200px; /* Ancho fijo deseado */
+    height: 200px; /* Alto fijo deseado */
+    overflow: hidden; /* Para recortar la imagen si es más grande */
+}
+
+.image-container img {
+    width: 100%; /* Para que la imagen ocupe todo el contenedor */
+    height: auto; /* Para mantener la proporción de la imagen */
+}

@@ -14,6 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Controller\CategoriaController;
 use App\Entity\Categoria;
 use App\Repository\CategoriaRepository;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\File;
 
 class ProductoType extends AbstractType
@@ -29,20 +32,7 @@ class ProductoType extends AbstractType
                 'placeholder' => 'Selecciona una categoria'
             ])
             ->add('foto', FileType::class, [
-                'label' => 'Image (JPEG file)',
-                'mapped' => false, // Esto es importante si el campo no está mapeado a una propiedad de la entidad
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                            'image/gif',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid image file',
-                    ])
-                ],
+                'mapped'=>false
             ])
             ->add('submit', SubmitType::class)
         ;

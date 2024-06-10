@@ -37,10 +37,35 @@ class RegistrationController extends AbstractController
             $user->setRoles(['ROLE_USER']);
             $this->em->persist($user);
             $this->em->flush();
-            return $this->redirectToRoute('userRegistration');
+            return $this->redirectToRoute('login');
         }
         return $this->render('registration/index.html.twig', [
             'registration_form' => $registration_form->createView()
         ]);
+    }
+
+    #[Route('/registrationAdmin', name: 'adminRegistration')]
+    public function adminRegistration (Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
+        $user = new User();
+        $registration_form = $this->createForm(UserType::class, $user);
+        $registration_form->handleRequest($request);
+        if ($registration_form->isSubmitted() && $registration_form->isValid()) {
+            $plaintextPassword = $registration_form->get('password')->getData();
+            $hashedPassword = $passwordHasher->hashPassword(
+                $user,
+                $plaintextPassword
+            );
+            $user->setPassword($hashedPassword);
+            $user->setRoles(['ROLE_ADMIN']);
+            $this->em->persist($user);
+            $this->em->flush();
+            return $this->redirectToRoute('login');
+        }
+        return $this->render('registration/index.html.twig', [
+            'registration_form' => $registration_form->createView()
+        ]);
+
     }
 }

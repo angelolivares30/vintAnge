@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Categoria;
 use App\Entity\Producto;
 use App\Form\ProductoType;
 use App\Repository\CategoriaRepository;
@@ -23,11 +24,13 @@ class ProductoController extends AbstractController
     }
 
     #[Route('/', name: 'listarProductos')]
-    public function listarProductos( ProductoRepository $productoRepository): Response
+    public function listarProductos( ProductoRepository $productoRepository, CategoriaRepository $categoriaRepository): Response
     {
         $productos = $productoRepository->findAll();
+        $categorias = $categoriaRepository->findAll();
         return $this->render('producto/index.html.twig', [
             'productos' => $productos,
+            'categorias' => $categorias
         ]);
     }
 //-----------------------INSERTAR PRODUCTO---------------------------//
@@ -74,6 +77,7 @@ class ProductoController extends AbstractController
     
     return $this->render('producto/crearProducto.html.twig', [
         'formProducto' => $form->createView()
+        
     ]);
     }
 
@@ -93,26 +97,21 @@ class ProductoController extends AbstractController
 //---------------------EDITAR PRODUCTO-----------------------//
 
 #[Route('/editarProducto/{id}', name: 'editProducto')]
-public function editProducto(int $id, Request $request, SluggerInterface $slugger, CategoriaRepository $categoriaRepository, ProductoRepository $productoRepository): Response
+public function editProducto(Request $request, SluggerInterface $slugger, CategoriaRepository $categoriaRepository, Producto $producto): Response
 {
     $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
-
-    $producto = $productoRepository->find($id);
-    if (!$producto) {
-        throw $this->createNotFoundException('El producto no existe');
-    }
-
+    
     $categorias = $categoriaRepository->findAll();
     $categoriaChoices = [];
     foreach ($categorias as $categoria) {
         $categoriaChoices[$categoria->getNombre()] = $categoria;
     }
-
+    
     $form = $this->createForm(ProductoType::class, $producto, [
         'categorias' => $categoriaChoices
     ]);
     $form->handleRequest($request);
-
+    
     if ($form->isSubmitted() && $form->isValid()) {
         $file = $form->get('foto')->getData();
         if ($file) {
@@ -130,16 +129,40 @@ public function editProducto(int $id, Request $request, SluggerInterface $slugge
             $producto->setFoto($newFilename);
         }
 
-        $this->em->persist($producto);
         $this->em->flush();
-        $this->addFlash('ss', '¡El producto ha sido actualizado correctamente!');
+        $this->addFlash('success', '¡Se ha actualizado correctamente!');
         
         return $this->redirectToRoute('listarProductos'); // Redirigir a la lista de productos después de enviar el formulario
     }
-
+    
     return $this->render('producto/editarProducto.html.twig', [
         'formProducto' => $form->createView(),
         'producto' => $producto
+    ]);
+}
+
+//-------------------------VISTA DE PRODUCTO POR CATEGORIA-----------------------------
+
+#[Route('/productos/categoria/{id}', name: 'productosPorCategoria')]
+    public function productosPorCategoria(Categoria $categoria, ProductoRepository $productoRepository, CategoriaRepository $categoriaRepository): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
+        $categorias = $categoriaRepository->findAll();
+        $productos = $productoRepository->findProductoByCategoria($categoria->getId());
+        return $this->render('producto/verProductoPorCategoria.html.twig', [
+            'categoria' => $categoria,
+            'productos' => $productos,
+            'categorias' => $categorias,
+        ]);
+    }
+
+#[Route('/producto/{id}', name: 'detalleProducto')]
+public function detalleProducto(Producto $producto, CategoriaRepository $categoriaRepository): Response
+{
+    $categorias = $categoriaRepository->findAll();
+    return $this->render('producto/detalleProducto.html.twig', [
+        'producto' => $producto,
+        'categorias' => $categorias
     ]);
 }
 

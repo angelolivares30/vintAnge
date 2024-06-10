@@ -1,0 +1,58 @@
+body{
+    background-color: #f5f5f5;
+    color: #333333;
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+}
+.container {
+    margin-top: 0;
+    margin-bottom: auto;
+    flex: 1;
+    height: 100%;
+
+}
+.container-categorias {
+    min-height: 81vh;
+}
+table.dataTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+table.dataTable th, table.dataTable td {
+    padding: 10px 12px;
+    border: 1px solid #dddddd;
+}
+table.dataTable thead {
+    background-color: #f0f0f0;
+}
+table.dataTable thead th {
+    color: #333333;
+}
+table.dataTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+table.dataTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+table.dataTable tbody tr:hover {
+    background-color: #e0e0e0;
+    color: #000000;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #333333 !important;
+    background-color: #f0f0f0 !important;
+    border: 1px solid #dddddd;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #e0e0e0 !important;
+    border: 1px solid #cccccc !important;
+}
+.dataTables_wrapper .dataTables_length select,
+.dataTables_wrapper .dataTables_filter input {
+    color: #333333;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+}
+footer {
+    display: block;
+}
