@@ -61,9 +61,9 @@
 			<div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">
 				{% for producto in productos|reverse %}
 					<div class="col">
-						<a href="{{ path('detalleProducto', {id: producto.id}) }}" class="text-decoration-none text-dark">
+						<a href="{{ path('detalleProducto', {id: producto.id} )}}" class="text-decoration-none text-dark">
 							<div class="card shadow">
-								<div class="card-body">
+								<div class="card-body"> 
 									<h5 class="card-title">{{ producto.nombre }}</h5>
 									<ul class="list-group list-group-flush">
 										<li class="list-group-item">
@@ -82,11 +82,17 @@
 									</ul>
 									{% if is_granted('ROLE_ADMIN') %}
 									<div class="text-end mt-3">
-										<a href="{{ path('deleteProducto', {id: producto.id}) }}" class="btn btn-danger me-2">Borrar</a>
+									{% if app.user %}
+										<span class="add-favorito" data-id-usuario="{{ app.user.id }}" data-id-producto="{{ producto.id }}" style="cursor: pointer;">
+											<i class="bi bi-heart{% if producto.id in favoritos %}-fill{% endif %}"></i>
+										</span>
+									{% endif %}
+										<a href="{{ path('deleteProducto', {id: producto.id}) }}" class="btn btn-danger">Borrar</a>
 										<a href="{{ path('editProducto', {id: producto.id}) }}" class="btn btn-primary">Editar</a>
 									</div>
 									{% endif %}
 								</div>
+								
 							</div>
 						</a>
 					</div>
@@ -98,4 +104,7 @@
 		<a href="{{ path('vistaAdmin') }}" class="btn btn-success mt-3">Acciones administrador</a>
 		{% endif %}
 	</div>
+{% endblock %}
+{%block javascripSecundario%}
+<script src="{{ asset('js/favorito.js') }}"></script>
 {% endblock %}

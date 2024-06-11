@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductoRepository::class)]
@@ -28,6 +30,17 @@ class Producto
     #[ORM\ManyToOne(inversedBy:'productos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categoria $categoria = null;
+
+    /**
+     * @var Collection<int, Favorito>
+     */
+    #[ORM\OneToMany(targetEntity: Favorito::class, mappedBy: 'idProducto', orphanRemoval: true)]
+    private Collection $favoritos;
+
+    public function __construct()
+    {
+        $this->favoritos = new ArrayCollection();
+    }
 
 
     
@@ -92,6 +105,36 @@ class Producto
     public function setCategoria(?Categoria $categoria): static
     {
         $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Favorito>
+     */
+    public function getFavoritos(): Collection
+    {
+        return $this->favoritos;
+    }
+
+    public function addFavorito(Favorito $favorito): static
+    {
+        if (!$this->favoritos->contains($favorito)) {
+            $this->favoritos->add($favorito);
+            $favorito->setIdProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorito(Favorito $favorito): static
+    {
+        if ($this->favoritos->removeElement($favorito)) {
+            // set the owning side to null (unless already changed)
+            if ($favorito->getIdProducto() === $this) {
+                $favorito->setIdProducto(null);
+            }
+        }
 
         return $this;
     }

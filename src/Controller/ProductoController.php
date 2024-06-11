@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Categoria;
+use App\Entity\Favorito;
 use App\Entity\Producto;
+use App\Entity\User;
 use App\Form\ProductoType;
 use App\Repository\CategoriaRepository;
+use App\Repository\FavoritoRepository;
 use App\Repository\ProductoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,13 +27,20 @@ class ProductoController extends AbstractController
     }
 
     #[Route('/', name: 'listarProductos')]
-    public function listarProductos( ProductoRepository $productoRepository, CategoriaRepository $categoriaRepository): Response
+    public function listarProductos( ProductoRepository $productoRepository, CategoriaRepository $categoriaRepository, FavoritoRepository $favoritoRepository): Response
     {
         $productos = $productoRepository->findAll();
         $categorias = $categoriaRepository->findAll();
+        $favoritos = [];
+        $user = $this->getUser();
+        if ($user) {
+            $favoritos = $favoritoRepository->findBy(['idUsuario' => $user->getId()]);
+            $favoritos = array_map(fn($favorito) => $favorito->getIdProducto()->getId(), $favoritos);
+        }
         return $this->render('producto/index.html.twig', [
             'productos' => $productos,
-            'categorias' => $categorias
+            'categorias' => $categorias,
+            'favoritos' => $favoritos
         ]);
     }
 //-----------------------INSERTAR PRODUCTO---------------------------//
@@ -156,6 +166,8 @@ public function editProducto(Request $request, SluggerInterface $slugger, Catego
         ]);
     }
 
+//---------------------------DETALLE PRODUCTO---------------------------//
+
 #[Route('/producto/{id}', name: 'detalleProducto')]
 public function detalleProducto(Producto $producto, CategoriaRepository $categoriaRepository): Response
 {
@@ -166,5 +178,24 @@ public function detalleProducto(Producto $producto, CategoriaRepository $categor
     ]);
 }
 
+//---------------------------VISTA DE PRODUCTOS FAVORITOS---------------------------//
+
+    #[Route('/favoritos/productos/user/{id}', name: 'productosFavoritos')]
+    public function productosFavoritos (CategoriaRepository $categoriaRepository,FavoritoRepository $favoritoRepository ,ProductoRepository $productoRepository, User $user): Response
+    {
+        $user = $this->getUser();
+        $categorias = $categoriaRepository->findAll();
+        if (!$user) {
+            return $this->redirectToRoute('login'); 
+        }
+
+        $favoritos = $favoritoRepository->findProductosFavoritosByUsuario($user->getId());
+        $productosFavoritos = array_map(fn($favorito) => $favorito->getIdProducto(), $favoritos);
+
+        return $this->render('producto/favoritos.html.twig', [
+            'productos' => $productosFavoritos,
+            'categorias' => $categorias
+        ]);
+    }
 
 }

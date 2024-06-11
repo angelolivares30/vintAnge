@@ -31,21 +31,21 @@ class ProductoRepository extends ServiceEntityRepository
     //        ;
     //    }
     public function findAll(): array
-       {
-            return $this->createQueryBuilder('p')
-                ->getQuery()
-                ->getResult()
-            ;
-        }
-        
+    {
+        return $this->createQueryBuilder('p')
+            ->getQuery()
+            ->getResult();
+    }
 
-        public function findProductoByCategoria($value): array
-        {
-            return $this->createQueryBuilder('p')
-                ->andWhere('p.categoria = :categoria')
-                ->setParameter('categoria', $value)
-                ->getQuery()
-                ->getResult()
-            ;
-        }
+
+    public function findProductoByCategoria($value): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.categoria = :categoria')
+            ->setParameter('categoria', $value)
+            ->getQuery()
+            ->getResult();
+    }
+
+    
 }

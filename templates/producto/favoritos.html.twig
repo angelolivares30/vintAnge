@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis Favoritos{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="styles/index.css">
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    {% if productos is empty %}
+			<div class="alert alert-info" role="alert">
+				No hay productos registrados
+			</div>
+		{% else %}
+			<div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4">
+				{% for producto in productos|reverse %}
+					<div class="col">
+						<a href="{{ path('detalleProducto', {id: producto.id} )}}" class="text-decoration-none text-dark">
+							<div class="card shadow">
+								<div class="card-body"> 
+									<h5 class="card-title">{{ producto.nombre }}</h5>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item">
+											<div class="image-container">
+												<img src={{ asset('uploads/fotosProductos/' ~ producto.foto) }} alt="{{ producto.nombre }}">
+											</div>
+										</li>
+										<li class="list-group-item">
+											<strong>Descripcion:</strong>
+											{{ producto.descripcion }}
+										</li>
+										<li class="list-group-item">
+											<strong>Precio:</strong>
+											{{ producto.precio }}
+										</li>
+									</ul>
+								</div>
+							</div>
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+        </div>
+{% endblock %}
