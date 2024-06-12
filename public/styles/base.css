@@ -41,3 +41,10 @@ body, html {
     width: 100%;
     height: auto;
   }
+  .container-about {
+    background-color: #ffffff; /* Fondo blanco */
+    margin-top: 20px; /* Margen superior */
+    padding: 20px; /* Padding interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombra ligera */
+}

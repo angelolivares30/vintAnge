@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pedido Success{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Tu pedido se ha realizado correctamente.</h1>
+    <a class="btn btn-success" href="{{ path('listarProductos') }}" >Volver al inicio</a>
+{% endblock %}

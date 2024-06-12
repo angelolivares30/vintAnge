@@ -166,17 +166,6 @@ public function editProducto(Request $request, SluggerInterface $slugger, Catego
         ]);
     }
 
-//---------------------------DETALLE PRODUCTO---------------------------//
-
-#[Route('/producto/{id}', name: 'detalleProducto')]
-public function detalleProducto(Producto $producto, CategoriaRepository $categoriaRepository): Response
-{
-    $categorias = $categoriaRepository->findAll();
-    return $this->render('producto/detalleProducto.html.twig', [
-        'producto' => $producto,
-        'categorias' => $categorias
-    ]);
-}
 
 //---------------------------VISTA DE PRODUCTOS FAVORITOS---------------------------//
 

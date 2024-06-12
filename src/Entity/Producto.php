@@ -37,9 +37,16 @@ class Producto
     #[ORM\OneToMany(targetEntity: Favorito::class, mappedBy: 'idProducto', orphanRemoval: true)]
     private Collection $favoritos;
 
+    /**
+     * @var Collection<int, Pedido>
+     */
+    #[ORM\OneToMany(targetEntity: Pedido::class, mappedBy: 'producto')]
+    private Collection $pedidos;
+
     public function __construct()
     {
         $this->favoritos = new ArrayCollection();
+        $this->pedidos = new ArrayCollection();
     }
 
 
@@ -133,6 +140,36 @@ class Producto
             // set the owning side to null (unless already changed)
             if ($favorito->getIdProducto() === $this) {
                 $favorito->setIdProducto(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pedido>
+     */
+    public function getPedidos(): Collection
+    {
+        return $this->pedidos;
+    }
+
+    public function addPedido(Pedido $pedido): static
+    {
+        if (!$this->pedidos->contains($pedido)) {
+            $this->pedidos->add($pedido);
+            $pedido->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removePedido(Pedido $pedido): static
+    {
+        if ($this->pedidos->removeElement($pedido)) {
+            // set the owning side to null (unless already changed)
+            if ($pedido->getProducto() === $this) {
+                $pedido->setProducto(null);
             }
         }
 

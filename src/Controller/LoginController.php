@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoriaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -22,5 +23,13 @@ class LoginController extends AbstractController
     #[Route('/logout', name: 'logout')]
     public function logout(AuthenticationUtils $authenticationUtils)
     {
+    }
+
+    #[Route('/aboutme', name: 'me')]
+    public function aboutMe(CategoriaRepository $categoriaRepository) {
+        $categorias = $categoriaRepository->findAll();
+        return $this->render('login/aboutme.html.twig', [
+            'categorias' => $categorias
+        ]);
     }
 }
