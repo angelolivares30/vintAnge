@@ -20,34 +20,18 @@
 					<button type="button" data-bs-target="#productCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
 					<button type="button" data-bs-target="#productCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
 				</div>
-				<div class="carousel-inner">
+				<div class="carousel-inner text-center">
 					<div class="carousel-item active">
-						<img src="https://via.placeholder.com/800x400?text=Producto+1" class="d-block w-100" alt="Producto 1">
-						<div class="carousel-caption d-none d-md-block">
-							<h5>Producto 1</h5>
-							<p>Descripción del producto 1.</p>
-						</div>
+						<img src="{{ asset('images/slider/cartel-slider.jpg') }}" class="d-block w-100 h-50" alt="Producto 1">
 					</div>
 					<div class="carousel-item">
-						<img src="https://via.placeholder.com/800x400?text=Producto+2" class="d-block w-100" alt="Producto 2">
-						<div class="carousel-caption d-none d-md-block">
-							<h5>Producto 2</h5>
-							<p>Descripción del producto 2.</p>
-						</div>
+						<img src="{{ asset('images/slider/caset-slider.jpg') }}" class="d-block w-100 h-50" alt="Producto 2">
 					</div>
 					<div class="carousel-item">
-						<img src="https://via.placeholder.com/800x400?text=Producto+3" class="d-block w-100" alt="Producto 3">
-						<div class="carousel-caption d-none d-md-block">
-							<h5>Producto 3</h5>
-							<p>Descripción del producto 3.</p>
-						</div>
+						<img src="{{ asset('images/slider/coche-slider.jpg') }}" class="d-block w-100 h-50" alt="Producto 3">
 					</div>
 					<div class="carousel-item">
-						<img src="https://via.placeholder.com/800x400?text=Producto+4" class="d-block w-100" alt="Producto 4">
-						<div class="carousel-caption d-none d-md-block">
-							<h5>Producto 4</h5>
-							<p>Descripción del producto 4.</p>
-						</div>
+						<img src="{{ asset('images/slider/caset2-slider.jpg') }}" class="d-block w-100 h-50" alt="Producto 4">
 					</div>
 				</div>
 			</div>
@@ -80,15 +64,17 @@
 											{{ producto.precio }}
 										</li>
 									</ul>
-									{% if is_granted('ROLE_ADMIN') %}
+									{% if is_granted('ROLE_USER') %}
 									<div class="text-end mt-3">
 									{% if app.user %}
 										<span class="add-favorito" data-id-usuario="{{ app.user.id }}" data-id-producto="{{ producto.id }}" style="cursor: pointer;">
 											<i class="bi bi-heart{% if producto.id in favoritos %}-fill{% endif %}"></i>
 										</span>
 									{% endif %}
+									{% if is_granted('ROLE_ADMIN') %}
 										<a href="{{ path('deleteProducto', {id: producto.id}) }}" class="btn btn-danger">Borrar</a>
 										<a href="{{ path('editProducto', {id: producto.id}) }}" class="btn btn-primary">Editar</a>
+										{% endif %}
 									</div>
 									{% endif %}
 								</div>
