@@ -67,7 +67,7 @@
 									{% if is_granted('ROLE_USER') %}
 									<div class="text-end mt-3">
 									{% if app.user %}
-										<span class="add-favorito" data-id-usuario="{{ app.user.id }}" data-id-producto="{{ producto.id }}" style="cursor: pointer;">
+										<span class="add-favorito" data-id-usuario="{{ app.user.id }}" data-id-producto="{{ producto.id }}" style="cursor: pointer; z-index:1000">
 											<i class="bi bi-heart{% if producto.id in favoritos %}-fill{% endif %}"></i>
 										</span>
 									{% endif %}

@@ -47,7 +47,7 @@ class RegistrationController extends AbstractController
     #[Route('/registrationAdmin', name: 'adminRegistration')]
     public function adminRegistration (Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Acceso denegado');
         $user = new User();
         $registration_form = $this->createForm(UserType::class, $user);
         $registration_form->handleRequest($request);

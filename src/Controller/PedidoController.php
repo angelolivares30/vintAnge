@@ -18,6 +18,7 @@ class PedidoController extends AbstractController
     #[Route('/pedido/add/{productoId}', name: 'addPedido')]
     public function addPedido(int $productoId ,Request $request, EntityManagerInterface $entityManager, CategoriaRepository $categoriaRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Acceso denegado');
         $categorias = $categoriaRepository->findAll();
 
         $producto = $entityManager->getRepository(Producto::class)->find($productoId);

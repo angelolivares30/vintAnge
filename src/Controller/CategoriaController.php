@@ -28,7 +28,7 @@ class CategoriaController extends AbstractController
     #[Route('/verCategorias', name: 'ver_categorias')]
     public function verCategorias(CategoriaRepository $categoriaRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Acceso denegado');
         // Obtener todas las incidencias del repositorio
         $categorias = $categoriaRepository->findAll();
         return $this->render('categoria/verCategorias.html.twig', [
@@ -40,7 +40,7 @@ class CategoriaController extends AbstractController
     #[Route('/insertarCategoria', name: 'add_categoria')]
     public function index(Request $request, EntityManagerInterface $em, CategoriaRepository $categoriaRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Acceso denegado');
         $categorias = $categoriaRepository->findAll();
         $categoria = new Categoria();
         $form = $this->createForm(CategoriaType::class, $categoria);
@@ -64,7 +64,7 @@ class CategoriaController extends AbstractController
     #[Route('/categoria/delete/{id}', name:'deleteCategoria')]
     public function delete(Categoria $categoria, EntityManagerInterface $entityManager):Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Acceso denegado');
         $this->addFlash('ss', '¡Se ha borrado correctamente!');
 
         $entityManager->remove($categoria);

@@ -48,7 +48,7 @@ class ProductoController extends AbstractController
     #[Route('/insertarProducto', name: 'addProducto')]
     public function addProducto(Request $request, SluggerInterface $slugger, CategoriaRepository $categoriaRepository): Response
     {
-    $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
+    $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Acceso denegado');
     $producto = new Producto();
     $categorias = $categoriaRepository->findAll();
     $categoriaChoices = [];
@@ -96,7 +96,7 @@ class ProductoController extends AbstractController
     #[Route('/producto/delete/{id}', name:'deleteProducto')]
     public function delete(Producto $producto, EntityManagerInterface $entityManager):Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Acceso denegado');
         $this->addFlash('ss', '¡Se ha borrado correctamente!');
 
         $entityManager->remove($producto);
@@ -109,7 +109,7 @@ class ProductoController extends AbstractController
 #[Route('/editarProducto/{id}', name: 'editProducto')]
 public function editProducto(Request $request, SluggerInterface $slugger, CategoriaRepository $categoriaRepository, Producto $producto): Response
 {
-    $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
+    $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Acceso denegado');
     
     $categorias = $categoriaRepository->findAll();
     $categoriaChoices = [];
@@ -156,7 +156,6 @@ public function editProducto(Request $request, SluggerInterface $slugger, Catego
 #[Route('/productos/categoria/{id}', name: 'productosPorCategoria')]
     public function productosPorCategoria(Categoria $categoria, ProductoRepository $productoRepository, CategoriaRepository $categoriaRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
         $categorias = $categoriaRepository->findAll();
         $productos = $productoRepository->findProductoByCategoria($categoria->getId());
         return $this->render('producto/verProductoPorCategoria.html.twig', [
@@ -172,6 +171,7 @@ public function editProducto(Request $request, SluggerInterface $slugger, Catego
     #[Route('/favoritos/productos/user/{id}', name: 'productosFavoritos')]
     public function productosFavoritos (CategoriaRepository $categoriaRepository,FavoritoRepository $favoritoRepository ,ProductoRepository $productoRepository, User $user): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Acceso denegado');
         $user = $this->getUser();
         $categorias = $categoriaRepository->findAll();
         if (!$user) {
